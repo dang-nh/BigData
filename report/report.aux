@@ -1,0 +1,96 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{berner2007clinical}
+\citation{mimic3}
+\citation{rotmensch2017learning}
+\citation{rotmensch2017learning}
+\citation{chandak2023primekg}
+\citation{mimic3}
+\citation{harutyunyan2019multitask}
+\citation{mullenbach2018explainable}
+\citation{winkler2006overview}
+\citation{broder1997resemblance}
+\citation{angles2018introduction}
+\citation{neo4j_gds}
+\citation{blondel2008fast}
+\citation{pagerank}
+\@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {II}Related Work}{1}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}Clinical Knowledge Graphs}{1}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}MIMIC-III-Based Research}{1}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-C}}Entity Resolution}{1}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-D}}Big Data Graph Processing}{1}{subsection.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {III}System Architecture}{2}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}Overview}{2}{subsection.3.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces System architecture: data flows from MIMIC-III sources through distributed processing into the Knowledge Graph.}}{2}{figure.1}\protected@file@percent }
+\newlabel{fig:arch}{{1}{2}{System architecture: data flows from MIMIC-III sources through distributed processing into the Knowledge Graph}{figure.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Technology Stack Justification}{2}{subsection.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {I}{\ignorespaces Technology Stack and Rationale}}{2}{table.1}\protected@file@percent }
+\newlabel{tab:stack}{{I}{2}{Technology Stack and Rationale}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Ontology Design}{2}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Entity Types}{2}{subsection.4.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {II}{\ignorespaces Knowledge Graph Entity Types}}{2}{table.2}\protected@file@percent }
+\newlabel{tab:entities}{{II}{2}{Knowledge Graph Entity Types}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}Relationship Types}{2}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {V}Implementation}{2}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-A}}Data Ingestion}{2}{subsection.5.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {III}{\ignorespaces Batch Ingestion Throughput}}{2}{table.3}\protected@file@percent }
+\newlabel{tab:ingestion}{{III}{2}{Batch Ingestion Throughput}{table.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-B}}NLP Concept Extraction}{3}{subsection.5.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {IV}{\ignorespaces NLP Backend Comparison}}{3}{table.4}\protected@file@percent }
+\newlabel{tab:nlp}{{IV}{3}{NLP Backend Comparison}{table.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-C}}Entity Resolution}{3}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-C}1}Blocking with MinHash LSH}{3}{subsubsection.5.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-C}2}Similarity Features}{3}{subsubsection.5.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {V-C}3}Random Forest Classifier}{3}{subsubsection.5.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {V-D}}Graph Construction}{3}{subsection.5.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {V}{\ignorespaces Entity Resolution Classifier Performance}}{3}{table.5}\protected@file@percent }
+\newlabel{tab:er}{{V}{3}{Entity Resolution Classifier Performance}{table.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VI}Evaluation}{3}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-A}}Experimental Setup}{3}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-B}}LSH Parameter Sweep (O2)}{3}{subsection.6.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Recall--speedup Pareto frontier for MinHash LSH. \textit  {(Placeholder curves; to be updated with MIMIC-III results.)}}}{3}{figure.2}\protected@file@percent }
+\newlabel{fig:lsh}{{2}{3}{Recall--speedup Pareto frontier for MinHash LSH. \textit {(Placeholder curves; to be updated with MIMIC-III results.)}}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-C}}Query Performance (O6)}{3}{subsection.6.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {VI}{\ignorespaces Cypher Query Latency (30 runs, milliseconds)}}{4}{table.6}\protected@file@percent }
+\newlabel{tab:queries}{{VI}{4}{Cypher Query Latency (30 runs, milliseconds)}{table.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-D}}Spark Optimization Experiments}{4}{subsection.6.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-D}1}Skew Handling (O1)}{4}{subsubsection.6.4.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {VII}{\ignorespaces Join Skew: Naive vs.\ Salted (mean of 3 runs)}}{4}{table.7}\protected@file@percent }
+\newlabel{tab:skew}{{VII}{4}{Join Skew: Naive vs.\ Salted (mean of 3 runs)}{table.7}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {VIII}{\ignorespaces Spark Partition Strategy Comparison}}{4}{table.8}\protected@file@percent }
+\newlabel{tab:partition}{{VIII}{4}{Spark Partition Strategy Comparison}{table.8}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-D}2}Partition Strategy (O5)}{4}{table.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-D}3}Neo4j Batch Size (O4)}{4}{subsubsection.6.4.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-E}}GDS Analytics}{4}{subsection.6.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-E}1}Diagnosis Community Detection}{4}{subsubsection.6.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {\mbox  {VI-E}2}Medication PageRank}{4}{subsubsection.6.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VI-F}}Scalability (Phase 7.2)}{4}{subsection.6.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Scalability: processing time vs.\ data fraction (30\%/60\%/100\% of 500-patient synthetic dataset). Graph build at 30\% and 60\% are estimated; ingestion and ER are measured.}}{4}{figure.3}\protected@file@percent }
+\newlabel{fig:scale}{{3}{4}{Scalability: processing time vs.\ data fraction (30\%/60\%/100\% of 500-patient synthetic dataset). Graph build at 30\% and 60\% are estimated; ingestion and ER are measured}{figure.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {VII}Discussion}{4}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-A}}Clinical Use Cases}{4}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-B}}Entity Resolution Limitations}{4}{subsection.7.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-C}}NLP Scope}{4}{subsection.7.3}\protected@file@percent }
+\citation{mimic3}
+\bibcite{berner2007clinical}{1}
+\bibcite{mimic3}{2}
+\bibcite{rotmensch2017learning}{3}
+\bibcite{chandak2023primekg}{4}
+\bibcite{harutyunyan2019multitask}{5}
+\bibcite{mullenbach2018explainable}{6}
+\bibcite{winkler2006overview}{7}
+\bibcite{broder1997resemblance}{8}
+\bibcite{angles2018introduction}{9}
+\bibcite{neo4j_gds}{10}
+\bibcite{blondel2008fast}{11}
+\bibcite{pagerank}{12}
+\bibcite{scispacy}{13}
+\bibcite{kafka}{14}
+\bibcite{spark}{15}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {VII-D}}Scalability to MIMIC-III Full}{5}{subsection.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {VIII}Conclusion}{5}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{References}{5}{section*.2}\protected@file@percent }
+\gdef \@abspage@last{5}

@@ -1,0 +1,33 @@
+# Core
+pyspark==3.5.0
+kafka-python==2.0.2
+pymongo[srv]==4.6.1
+neo4j==5.15.0
+pandas==2.1.4
+pyarrow==14.0.2
+
+# NLP
+scispacy==0.5.4
+https://s3-us-west-2.amazonaws.com/ai2-s3-scispacy/releases/v0.5.4/en_core_sci_md-0.5.4.tar.gz
+transformers==4.36.2
+torch==2.1.2
+
+# Entity Resolution
+recordlinkage==0.16
+jellyfish==1.0.1       # Jaro-Winkler, Levenshtein
+
+# Viz & notebooks
+jupyter==1.0.0
+matplotlib==3.8.2
+seaborn==0.13.0
+pyvis==0.3.2            # graph visualization
+streamlit==1.29.0
+
+# Testing & quality
+pytest==7.4.4
+great-expectations==0.18.8
+
+# Utilities
+tqdm==4.66.1
+python-dotenv==1.0.0
+loguru==0.7.2
