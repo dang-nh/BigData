@@ -1,15 +1,28 @@
 """
 Optimization #4: Neo4j Python-driver batch size benchmark.
 Tests batch sizes 500→50000 when loading Diagnosis nodes.
-Outputs data/results/graph_load_benchmark.csv
+Writes RESULTS_DIR/graph_load_benchmark.csv (see kg_paths).
 """
-import os, time, csv
+import csv
+import os
+import sys
+import time
+from pathlib import Path
 from neo4j import GraphDatabase
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).resolve().parents[2] / ".env")
+except ImportError:
+    pass
 
 NEO4J_URI  = os.getenv("NEO4J_URI",      "bolt://localhost:7687")
 NEO4J_USER = os.getenv("NEO4J_USER",     "neo4j")
 NEO4J_PASS = os.getenv("NEO4J_PASSWORD", "neo4jpassword")
-RESULTS    = os.getenv("RESULTS_DIR",    "/home/ntan/final-proj/data/results")
+RESULTS    = str(kg_paths.results_dir())
 
 BATCH_SIZES = [500, 1000, 5000, 10000, 25000, 50000]
 N_ROWS      = 10_000   # synthetic node count for benchmark

@@ -1,0 +1,12 @@
+table,rows,elapsed_s
+patients,500,5.06
+admissions,1750,1.71
+diagnoses_icd,7866,1.49
+procedures_icd,1382,1.09
+prescriptions,10443,1.57
+labevents,30000,1.55
+noteevents,21670,1.73
+caregivers,100,0.22
+d_icd_diagnoses,27,0.23
+d_icd_procedures,10,0.21
+d_labitems,15,0.19

@@ -1,0 +1,3 @@
+algorithm,communities,modularity,time_ms
+Louvain,2,-0.0039,252.6
+PageRank,,,92.7

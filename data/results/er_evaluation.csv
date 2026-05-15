@@ -1,0 +1,3 @@
+entity_type,auc,precision,recall,f1,train_time_s
+medications,1.0,1.0,1.0,1.0,2.13
+diagnoses,1.0,1.0,1.0,1.0,1.36

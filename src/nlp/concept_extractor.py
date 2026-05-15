@@ -4,16 +4,23 @@ Runs as a Spark job; uses mapPartitions to load model once per partition.
 """
 
 import os
+import sys
 import json
+from pathlib import Path
 from typing import Iterator
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
 from pyspark.sql import SparkSession, Row
 from pyspark.sql import functions as F
 from pyspark.sql.types import (
     StructType, StructField, StringType, FloatType, IntegerType, ArrayType
 )
 
-PARQUET_DIR = os.getenv("PARQUET_OUTPUT_DIR", "/data/parquet")
-OUT_DIR = os.getenv("PARQUET_OUTPUT_DIR", "/data/parquet") + "/concepts"
+_pq = str(kg_paths.parquet_output_dir())
+PARQUET_DIR = _pq
+OUT_DIR = str(kg_paths.parquet_output_dir() / "concepts")
 
 CONCEPT_SCHEMA = StructType([
     StructField("note_row_id", StringType()),

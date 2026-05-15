@@ -1,0 +1,6 @@
+query,p50_ms,p95_ms,p99_ms
+Q1-shortest-path,0.8,3.13,42.19
+Q2-differential-dx,2.19,5.73,35.77
+Q3-cohort-discovery,6.15,13.75,114.96
+Q4-drug-dx-cooccur,1.33,3.77,41.47
+Q5-top-drugs-for-dx,1.18,3.8,35.83

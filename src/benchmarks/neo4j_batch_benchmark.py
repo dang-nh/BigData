@@ -12,16 +12,21 @@ Usage:
 """
 
 import os
+import sys
 import time
 import csv
+from pathlib import Path
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 
-PARQUET_DIR = os.getenv("PARQUET_OUTPUT_DIR", "/data/parquet")
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
+PARQUET_DIR = str(kg_paths.parquet_output_dir())
 NEO4J_URI = os.getenv("NEO4J_URI", "bolt://neo4j:7687")
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASS = os.getenv("NEO4J_PASSWORD", "neo4jpassword")
-RESULTS_DIR = "/data/results"
+RESULTS_DIR = str(kg_paths.results_dir())
 
 BATCH_SIZES = [500, 1000, 5000, 10000, 25000, 50000]
 

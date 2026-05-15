@@ -13,14 +13,25 @@ Usage:
 """
 
 import os
+import sys
 import time
 import csv
+from pathlib import Path
 from neo4j import GraphDatabase
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).resolve().parents[2] / ".env")
+except ImportError:
+    pass
 
 NEO4J_URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
 NEO4J_PASS = os.getenv("NEO4J_PASSWORD", "neo4jpassword")
-RESULTS_DIR = "/data/results"
+RESULTS_DIR = str(kg_paths.results_dir())
 
 
 class GDSAnalytics:

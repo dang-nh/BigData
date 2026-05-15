@@ -4,12 +4,18 @@ Reduces O(n²) comparison space to manageable candidate pairs.
 """
 
 import os
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
 from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql import functions as F
 from pyspark.sql.types import StringType
 from pyspark.ml.feature import MinHashLSH, Tokenizer, CountVectorizer, HashingTF, IDF
 
-PARQUET_DIR = os.getenv("PARQUET_OUTPUT_DIR", "/data/parquet")
+PARQUET_DIR = str(kg_paths.parquet_output_dir())
 CANDIDATES_OUT = f"{PARQUET_DIR}/er_candidates"
 
 

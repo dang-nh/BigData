@@ -1,0 +1,7 @@
+method,run,time_s
+naive,1,1.41
+naive,2,0.4
+naive,3,0.38
+salted_10,1,1.15
+salted_10,2,0.5
+salted_10,3,0.46

@@ -1,9 +1,26 @@
 COMPOSE = docker compose -f docker/docker-compose.yml
+# Load .env for Make variables (e.g. neo4j-schema). Keep lines in shell/env form: KEY=value.
+-include .env
+export
 
-.PHONY: up down reset logs ps
+NEO4J_USER ?= neo4j
+NEO4J_PASSWORD ?= neo4jpassword
 
+.PHONY: compose-reset up up-all down reset logs ps
+
+compose-reset:
+	$(COMPOSE) down --remove-orphans
+	@echo "Stale stack cleared. Retry: make up"
+
+# Core services (no Elasticsearch — avoids vm.max_map_count bootstrap failures on many hosts).
 up:
 	$(COMPOSE) up -d
+	@echo "Services starting... check status with: make ps"
+	@echo "Note: Elasticsearch is optional. For full stack incl. ES: make up-all"
+
+# Full stack including Elasticsearch (host may need: sudo sysctl -w vm.max_map_count=262144)
+up-all:
+	$(COMPOSE) --profile es up -d
 	@echo "Services starting... check status with: make ps"
 
 down:
@@ -47,11 +64,12 @@ run-er:
 # ── Neo4j schema setup ─────────────────────────────────────
 
 neo4j-schema:
-	docker exec neo4j cypher-shell -u neo4j -p neo4jpassword -f /var/lib/neo4j/import/schema.cypher
+	cat src/graph/schema.cypher | $(COMPOSE) exec -T neo4j \
+		cypher-shell -u "$(NEO4J_USER)" -p "$(NEO4J_PASSWORD)"
 
 # ── Tests ──────────────────────────────────────────────────
 
 test:
 	python -m pytest tests/ -v
 
-.PHONY: ingest-batch ingest-stream build-graph run-er neo4j-schema test
+.PHONY: compose-reset ingest-batch ingest-stream build-graph run-er neo4j-schema test

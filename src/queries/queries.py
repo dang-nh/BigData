@@ -3,9 +3,20 @@ Knowledge Graph queries: 5 clinical use cases + benchmarking.
 """
 
 import os
+import sys
 import time
 import statistics
+from pathlib import Path
 from neo4j import GraphDatabase
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).resolve().parents[2] / ".env")
+except ImportError:
+    pass
 
 NEO4J_URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
 NEO4J_USER = os.getenv("NEO4J_USER", "neo4j")
@@ -139,13 +150,16 @@ def run_benchmarks():
     results.append(benchmark_query(kg, "Q5-top-drugs-for-dx",
         lambda: kg.q5_top_drugs_for_diagnosis(ICD_CODE)))
 
-    import csv, os as _os
-    _os.makedirs("/data/results", exist_ok=True)
-    with open("/data/results/query_benchmark.csv", "w", newline="") as f:
+    import csv
+
+    outp = kg_paths.results_dir()
+    outp.mkdir(parents=True, exist_ok=True)
+    out_fp = outp / "query_benchmark.csv"
+    with open(out_fp, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=["query", "p50_ms", "p95_ms", "p99_ms"])
         writer.writeheader()
         writer.writerows(results)
-    print("Saved to /data/results/query_benchmark.csv")
+    print(f"Saved to {out_fp}")
     kg.close()
 
 

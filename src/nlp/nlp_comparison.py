@@ -6,22 +6,34 @@ Methods:
   - scispacy  : scispaCy en_core_sci_md + UMLS linker
   - clinbert  : ClinicalBERT NER (on a 10k-note subset)
 
-Outputs results/nlp_comparison.csv with F1, precision, recall, latency, throughput.
+Outputs data/results/nlp_comparison.csv with F1, precision, recall, latency, throughput.
 
 Usage:
-  python src/nlp/nlp_comparison.py --notes-parquet /data/parquet/noteevents \
-                                   --gold-csv /data/gold/note_annotations.csv \
-                                   --sample 1000
+  python src/nlp/nlp_comparison.py \\
+    --notes-parquet data/parquet/noteevents \\
+    --gold-csv path/to/note_annotations.csv \\
+    --sample 1000
 """
 
 import os
 import csv
+import sys
 import time
 import argparse
 import re
+from pathlib import Path
 from typing import Iterator
 
-RESULTS_DIR = "/data/results"
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).resolve().parents[2] / ".env")
+except ImportError:
+    pass
+
+RESULTS_DIR = str(kg_paths.results_dir())
 
 
 # ── Method 1: Regex / keyword baseline ────────────────────────────────────────
@@ -160,7 +172,7 @@ def run_comparison(notes_parquet: str, sample: int, gold_csv: str | None):
 
     # ── Baseline: regex ──────────────────────────────────────────────────────
     print("\n[1/3] Regex baseline ...")
-    parquet_dir = os.getenv("PARQUET_OUTPUT_DIR", "/data/parquet")
+    parquet_dir = str(kg_paths.parquet_output_dir())
     keywords = load_icd_keywords(f"{parquet_dir}/d_icd_diagnoses")
     t0 = time.perf_counter()
     regex_preds = [extract_regex(t, keywords) for t in texts]
@@ -229,7 +241,7 @@ def run_comparison(notes_parquet: str, sample: int, gold_csv: str | None):
 
 def main():
     parser = argparse.ArgumentParser()
-    parquet_dir = os.getenv("PARQUET_OUTPUT_DIR", "/data/parquet")
+    parquet_dir = str(kg_paths.parquet_output_dir())
     parser.add_argument("--notes-parquet", default=f"{parquet_dir}/noteevents")
     parser.add_argument("--gold-csv", default=None)
     parser.add_argument("--sample", type=int, default=1000)

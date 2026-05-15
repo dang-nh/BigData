@@ -1,4 +1,5 @@
-version: "3.8"
+# Elasticsearch defaults to Docker Compose profile "es". Core stack (`make up`) stays up
+# without host sysctl tweaks; run `docker compose ... --profile es up -d` for ES.
 
 networks:
   kg-net:
@@ -55,7 +56,8 @@ services:
 
   # ── Spark ──────────────────────────────────────────────
   spark-master:
-    image: bitnami/spark:3.5
+    # bitnami/spark moved to Docker Hub legacy registry (Spark 3.5.x tags)
+    image: bitnamilegacy/spark:3.5.6
     container_name: spark-master
     hostname: spark-master
     networks: [kg-net]
@@ -65,6 +67,11 @@ services:
       SPARK_RPC_ENCRYPTION_ENABLED: "no"
       SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED: "no"
       SPARK_SSL_ENABLED: "no"
+      PYTHONPATH: "/app/src"
+      MIMIC_DATA_DIR: /data/mimic-iii
+      PARQUET_OUTPUT_DIR: /data/parquet
+      RESULTS_DIR: /data/results
+      SPARK_CHECKPOINT_DIR: /data/checkpoints/notes-stream
     ports:
       - "8080:8080"   # Spark UI
       - "7077:7077"   # Spark master port
@@ -73,7 +80,7 @@ services:
       - ../src:/app/src
 
   spark-worker:
-    image: bitnami/spark:3.5
+    image: bitnamilegacy/spark:3.5.6
     container_name: spark-worker
     networks: [kg-net]
     depends_on: [spark-master]
@@ -82,6 +89,11 @@ services:
       SPARK_MASTER_URL: spark://spark-master:7077
       SPARK_WORKER_MEMORY: 4G
       SPARK_WORKER_CORES: 2
+      PYTHONPATH: "/app/src"
+      MIMIC_DATA_DIR: /data/mimic-iii
+      PARQUET_OUTPUT_DIR: /data/parquet
+      RESULTS_DIR: /data/results
+      SPARK_CHECKPOINT_DIR: /data/checkpoints/notes-stream
     volumes:
       - ../data:/data
       - ../src:/app/src
@@ -133,6 +145,8 @@ services:
 
   # ── Elasticsearch (optional — full-text search on notes) ──
   elasticsearch:
+    profiles:
+      - es
     image: elasticsearch:8.11.0
     container_name: elasticsearch
     hostname: elasticsearch

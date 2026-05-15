@@ -1,0 +1,11 @@
+ROW_ID,ICD9_CODE,SHORT_TITLE,LONG_TITLE
+1,9671,Cont inv mec ven 96+ hr,Cont inv mec ven 96+ hr
+2,3893,Venous cath NEC,Venous cath NEC
+3,3731,Pericardiocentesis,Pericardiocentesis
+4,9604,Insert endotracheal tube,Insert endotracheal tube
+5,8856,Cor arteriography NEC,Cor arteriography NEC
+6,3615,Single int mam-LAD bypass,Single int mam-LAD bypass
+7,0066,Percut translum cor ang,Percut translum cor ang
+8,9915,Parenteral infusion NEC,Parenteral infusion NEC
+9,4553,Oth partial colectomy,Oth partial colectomy
+10,5123,Laparoscopic cholecystect,Laparoscopic cholecystect

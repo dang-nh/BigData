@@ -1,0 +1,5 @@
+num_hash_tables,threshold,lsh_pairs,bf_pairs,recall_approx,lsh_time_s,bf_time_s,speedup_x
+3,0.8,8,276,0.029,0.82,0.71,0.87
+5,0.7,9,276,0.0326,0.43,0.71,1.65
+10,0.6,4,276,0.0145,0.39,0.71,1.82
+15,0.5,0,276,0.0,0.35,0.71,2.04

@@ -38,8 +38,10 @@ NOTEEVENTS ──► Kafka ──► Spark SS ──► MongoDB
 cp .env.example .env
 # Edit .env with your MIMIC data paths
 
-# 2. Start all services
+# 2. Start core services (Kafka, Spark, MongoDB, Neo4j). Elasticsearch is optional:
 make up
+# Full stack with Elasticsearch (may require: sudo sysctl -w vm.max_map_count=262144):
+# make up-all
 
 # 3. (If no MIMIC-III access) Download MIMIC-IV demo data
 python src/ingest/mimic_demo_setup.py
@@ -64,6 +66,21 @@ make build-graph
 
 # 8. Run queries & benchmarks
 python src/queries/queries.py
+```
+
+## Troubleshooting Docker Compose
+
+**`Error response from daemon: No such container: …`** — Compose still references a container ID that no longer exists on the Docker daemon (stale state). Run:
+
+```bash
+make compose-reset   # docker compose down --remove-orphans
+make up
+```
+
+Set **`COMPOSE_PROJECT_NAME=mimickg`** in `.env` (see `.env.example`) so the project name stays stable. If the error persists, remove named containers manually, then `make up`:
+
+```bash
+docker rm -f zookeeper kafka spark-master spark-worker mongodb neo4j 2>/dev/null || true
 ```
 
 ## Key Results

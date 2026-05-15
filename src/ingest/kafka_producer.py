@@ -9,11 +9,23 @@ Usage:
 import os
 import csv
 import json
+import sys
 import time
 import argparse
 import logging
 from datetime import datetime
+from pathlib import Path
+
 from kafka import KafkaProducer
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).resolve().parents[2] / ".env")
+except ImportError:
+    pass
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger(__name__)
@@ -95,7 +107,11 @@ def stream_notes(
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--csv", default=os.path.join(os.getenv("MIMIC_DATA_DIR", "/data/mimic-iii"), "NOTEEVENTS.csv"))
+    parser.add_argument(
+        "--csv",
+        default=str(kg_paths.mimic_data_dir() / "NOTEEVENTS.csv"),
+        help="Path to NOTEEVENTS.csv",
+    )
     parser.add_argument("--topic", default=os.getenv("KAFKA_TOPIC_NOTES", "clinical-notes"))
     parser.add_argument("--servers", default=os.getenv("KAFKA_BOOTSTRAP_SERVERS", "localhost:9092"))
     parser.add_argument("--speed", type=float, default=100.0, help="Simulation speed multiplier")

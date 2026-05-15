@@ -4,8 +4,14 @@ Run via: spark-submit src/ingest/batch_loader.py
 """
 
 import os
+import sys
 import time
 import logging
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import StructType
@@ -13,8 +19,8 @@ from pyspark.sql.types import StructType
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 log = logging.getLogger(__name__)
 
-MIMIC_DIR = os.getenv("MIMIC_DATA_DIR", "/data/mimic-iii")
-OUT_DIR = os.getenv("PARQUET_OUTPUT_DIR", "/data/parquet")
+MIMIC_DIR = str(kg_paths.mimic_data_dir())
+OUT_DIR = str(kg_paths.parquet_output_dir())
 
 # Each entry: (csv_filename, partition_by_col or None)
 TABLES = [
@@ -97,8 +103,9 @@ def main():
 
     # Save benchmark
     import csv
-    os.makedirs("/data/results", exist_ok=True)
-    out_csv = "/data/results/ingestion_benchmark.csv"
+    res = kg_paths.results_dir()
+    res.mkdir(parents=True, exist_ok=True)
+    out_csv = str(res / "ingestion_benchmark.csv")
     with open(out_csv, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=["table", "rows", "elapsed_s"])
         writer.writeheader()

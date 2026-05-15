@@ -4,6 +4,12 @@ Run via: spark-submit --packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.
 """
 
 import os
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import StructType, StructField, StringType
@@ -13,7 +19,7 @@ KAFKA_SERVERS = os.getenv("KAFKA_BOOTSTRAP_SERVERS", "kafka:29092")
 KAFKA_TOPIC = os.getenv("KAFKA_TOPIC_NOTES", "clinical-notes")
 MONGO_URI = os.getenv("MONGO_URI", "mongodb://admin:admin123@mongodb:27017")
 MONGO_DB = os.getenv("MONGO_DB", "mimic_kg")
-CHECKPOINT_DIR = "/data/checkpoints/notes-stream"
+CHECKPOINT_DIR = str(kg_paths.checkpoints_notes_stream_dir())
 
 NOTE_SCHEMA = StructType([
     StructField("row_id", StringType()),

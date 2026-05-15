@@ -4,6 +4,12 @@ Output: same_as_edges.parquet — entity pairs determined to be the same.
 """
 
 import os
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
 from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql import functions as F
 from pyspark.ml import Pipeline
@@ -11,7 +17,7 @@ from pyspark.ml.classification import RandomForestClassifier, LogisticRegression
 from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.evaluation import BinaryClassificationEvaluator, MulticlassClassificationEvaluator
 
-PARQUET_DIR = os.getenv("PARQUET_OUTPUT_DIR", "/data/parquet")
+PARQUET_DIR = str(kg_paths.parquet_output_dir())
 FEATURES_DIR = f"{PARQUET_DIR}/er_features"
 GOLD_DIR = f"{PARQUET_DIR}/er_gold"
 SAME_AS_OUT = f"{PARQUET_DIR}/same_as_edges"
@@ -125,9 +131,12 @@ def main():
     results.append(train_and_evaluate(spark, "diagnoses", DIAG_FEATURE_COLS))
 
     # Save evaluation results
-    import csv, os as _os
-    _os.makedirs("/data/results", exist_ok=True)
-    with open("/data/results/er_evaluation.csv", "w", newline="") as f:
+    import csv
+
+    outp = kg_paths.results_dir()
+    outp.mkdir(parents=True, exist_ok=True)
+    out_fp = outp / "er_evaluation.csv"
+    with open(out_fp, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=["entity_type", "auc", "precision", "recall", "f1"])
         writer.writeheader()
         writer.writerows(results)

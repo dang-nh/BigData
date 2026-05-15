@@ -3,12 +3,18 @@ ER feature engineering: compute pairwise similarity features for candidate pairs
 """
 
 import os
+import sys
 import jellyfish
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
 from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql import functions as F
 from pyspark.sql.types import FloatType, DoubleType
 
-PARQUET_DIR = os.getenv("PARQUET_OUTPUT_DIR", "/data/parquet")
+PARQUET_DIR = str(kg_paths.parquet_output_dir())
 CANDIDATES_DIR = f"{PARQUET_DIR}/er_candidates"
 FEATURES_OUT = f"{PARQUET_DIR}/er_features"
 

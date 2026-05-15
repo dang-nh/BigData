@@ -3,16 +3,30 @@ Local pipeline runner — wraps all stages, sets local Spark master.
 Run: .venv/bin/python3 run_pipeline.py [--stage all|etl|er|graph|bench|query]
 """
 
-import os, sys, argparse, time, csv
-os.environ.setdefault("MIMIC_DATA_DIR",    "/home/ntan/final-proj/data/mimic-iii")
-os.environ.setdefault("PARQUET_OUTPUT_DIR","/home/ntan/final-proj/data/parquet")
-os.environ.setdefault("NEO4J_URI",         "bolt://localhost:7687")
-os.environ.setdefault("NEO4J_USER",        "neo4j")
-os.environ.setdefault("NEO4J_PASSWORD",    "neo4jpassword")
+import os
+import sys
+from pathlib import Path
 
-MIMIC_DIR  = os.environ["MIMIC_DATA_DIR"]
-PARQUET    = os.environ["PARQUET_OUTPUT_DIR"]
-RESULTS    = "/home/ntan/final-proj/data/results"
+_rp = Path(__file__).resolve().parent
+sys.path.insert(0, str(_rp / "src"))
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv(_rp / ".env")
+except ImportError:
+    pass
+
+import kg_paths
+
+import argparse, time, csv
+
+os.environ.setdefault("NEO4J_URI", "bolt://localhost:7687")
+os.environ.setdefault("NEO4J_USER", "neo4j")
+os.environ.setdefault("NEO4J_PASSWORD", "neo4jpassword")
+
+MIMIC_DIR = str(kg_paths.mimic_data_dir())
+PARQUET = str(kg_paths.parquet_output_dir())
+RESULTS = str(kg_paths.results_dir())
 os.makedirs(RESULTS, exist_ok=True)
 
 def get_spark(app="KG-Pipeline"):
@@ -290,7 +304,7 @@ def run_graph():
 
     # Apply schema
     print("  Applying schema constraints ...")
-    schema_path = "/home/ntan/final-proj/src/graph/schema.cypher"
+    schema_path = kg_paths.schema_cypher_path()
     with open(schema_path) as f:
         statements = [s.strip() for s in f.read().split(";") if s.strip()
                       and not s.strip().startswith("//")]

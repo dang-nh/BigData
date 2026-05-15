@@ -6,15 +6,24 @@ MIMIC-IV Demo contains ~100 patients with full structure matching MIMIC-III tabl
 Tables are renamed to match the MIMIC-III naming convention used in batch_loader.py.
 
 Usage:
-  python src/ingest/mimic_demo_setup.py [--out-dir /data/mimic-iii]
+  python src/ingest/mimic_demo_setup.py [--out-dir data/mimic-iii]
 """
 
-import os
+import sys
 import argparse
 import zipfile
 import shutil
 import urllib.request
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).resolve().parents[2] / ".env")
+except ImportError:
+    pass
 
 DEMO_URL = "https://physionet.org/static/published-projects/mimic-iv-demo/mimic-iv-clinical-database-demo-2.2.zip"
 
@@ -79,7 +88,11 @@ def extract_and_rename(zip_path: Path, out_dir: Path):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--out-dir", default=os.getenv("MIMIC_DATA_DIR", "/data/mimic-iii"))
+    parser.add_argument(
+        "--out-dir",
+        default=str(kg_paths.mimic_data_dir()),
+        help="Directory for MIMIC-style CSVs (see MIMIC_DATA_DIR in .env.example)",
+    )
     parser.add_argument("--skip-download", action="store_true",
                         help="Skip download if zip already exists")
     args = parser.parse_args()

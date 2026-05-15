@@ -8,11 +8,21 @@ import csv
 import random
 import string
 from datetime import datetime, timedelta
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
 
 random.seed(42)
 
-OUT_DIR = Path(os.getenv("MIMIC_DATA_DIR", "/home/ntan/final-proj/data/mimic-iii"))
+try:
+    from dotenv import load_dotenv
+    load_dotenv(Path(__file__).resolve().parents[2] / ".env")
+except ImportError:
+    pass
+
+OUT_DIR = kg_paths.mimic_data_dir()
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 N_PATIENTS    = 500

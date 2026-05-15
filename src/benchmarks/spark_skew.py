@@ -14,14 +14,19 @@ Usage:
 """
 
 import os
+import sys
 import time
 import csv
+from pathlib import Path
 from pyspark.sql import SparkSession, DataFrame
 from pyspark.sql import functions as F
 from pyspark.sql.types import IntegerType
 
-PARQUET_DIR = os.getenv("PARQUET_OUTPUT_DIR", "/data/parquet")
-RESULTS_DIR = "/data/results"
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import kg_paths
+
+PARQUET_DIR = str(kg_paths.parquet_output_dir())
+RESULTS_DIR = str(kg_paths.results_dir())
 SALT_BUCKETS = 20
 
 
